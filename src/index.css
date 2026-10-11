@@ -1,3 +1,6 @@
+/* =========================================================
+   SESSÃO 1: VARIÁVEIS GLOBAIS, RESET E BASE
+   ========================================================= */
 :root {
   --primary-yellow: #F7C200;
   --primary-yellow-hover: #E0B000;
@@ -8,6 +11,8 @@
   --light-bg: #F6F5F2;
   --card-border: #E8E8E8;
   --dark-navy: #2A275C;
+  --page-gutter: clamp(16px, 4vw, 60px);
+  --content-width: 1280px;
 }
 
 * {
@@ -23,6 +28,30 @@ body {
   overflow-x: hidden;
 }
 
+img,
+svg {
+  max-width: 100%;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.header-topbar .container,
+.main-header .container,
+.category-nav .container,
+.categories-section,
+.brands-section,
+.newsletter-section .container,
+.main-footer .container,
+.main-footer .footer-bottom {
+  width: min(100%, var(--content-width));
+}
+
+/* =========================================================
+   SESSÃO 2: HEADER (TOPBAR E CABEÇALHO PRINCIPAL)
+   ========================================================= */
 .header-topbar {
   background-color: #FFFFFF;
   border-bottom: 1px solid #F0F0F0;
@@ -140,6 +169,29 @@ body {
   color: var(--royal-blue);
 }
 
+/* --- MELHORIA DA TOP BAR EM MOBILE --- */
+@media (max-width: 768px) {
+  .header-topbar .topbar-container {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    justify-content: flex-start;
+    padding: 6px 15px;
+    gap: 20px;
+    scrollbar-width: none;
+  }
+  .header-topbar .topbar-container::-webkit-scrollbar {
+    display: none;
+  }
+  .header-topbar .topbar-item {
+    flex-shrink: 0;
+    font-size: 12px;
+  }
+}
+
+/* =========================================================
+   SESSÃO 3: NAVEGAÇÃO E MENU MOBILE (NAVBAR)
+   ========================================================= */
 .category-nav .container {
   max-width: 1280px;
   margin: 0 auto;
@@ -164,43 +216,6 @@ body {
   gap: 5px;
 }
 
-.product-shelf {
-  width: 1364px;
-  max-width: 100%;
-  height: 500px;
-  margin: 0 auto;
-  padding: 10px; 
-  position: relative;
-}
-
-.product-shelf .shelf-wrapper {
-  padding: 30px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-.carousel-viewport {
-  overflow: hidden;
-  width: 100%;
-  padding: 10px 0; 
-}
-
-.products-track {
-  display: flex;
-  width: 100; 
-  gap: 18px; 
-  transition: transform 0.5s ease-in-out;
-  will-change: transform;
-}
-
-.carousel-card {  
-  flex: 0 0 calc((100% - 54px) / 4); 
-  box-sizing: border-box;
-}
-
-
 .category-nav .nav-item:hover,
 .category-nav .nav-item.active {
   color: var(--royal-blue);
@@ -210,6 +225,130 @@ body {
   color: var(--royal-blue);
 }
 
+/* --- ESTILOS DO MENU DE HAMBÚRGUER --- */
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #3F3F40;
+  padding: 5px;
+}
+
+/* Oculta elementos de texto extra no desktop se necessário */
+.desktop-only {
+  display: flex;
+}
+
+/* Gaveta do menu mobile (escondida por predefinição) */
+.mobile-menu-drawer {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 280px;
+  height: 100vh;
+  background: #FFFFFF;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: left 0.3s ease-in-out;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.mobile-menu-drawer.open {
+  left: 0;
+}
+
+/* Cabeçalho do menu mobile com o botão de fechar ("X") */
+.mobile-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #F0F0F0;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.mobile-menu-header h3 {
+  font-size: 18px;
+  color: var(--royal-blue, #070716);
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+.close-menu-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #3F3F40;
+  padding: 5px;
+}
+
+.mobile-menu-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.mobile-menu-content ul li {
+  padding: 12px 0;
+  border-bottom: 1px solid #F0F0F0;
+}
+
+.mobile-menu-content ul li a {
+  text-decoration: none;
+  color: #3F3F40;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.mobile-menu-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border-top: 1px solid #F0F0F0;
+  padding-top: 20px;
+}
+
+.mobile-menu-actions a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #3F3F40;
+  font-weight: 500;
+}
+
+/* Ativação do botão de hambúrguer e ajuste do layout em telas pequenas */
+@media (max-width: 768px) {
+  .hamburger-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-topbar {
+    display: none;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .main-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+  }
+}
+
+/* =========================================================
+   SESSÃO 4: HERO BANNER
+   ========================================================= */
 .hero-banner {
   width: 100%; 
 }
@@ -266,6 +405,9 @@ body {
   transform: translateY(-1px);
 }
 
+/* =========================================================
+   SESSÃO 5: SEÇÃO DE CATEGORIAS (ÍCONES REDONDOS)
+   ========================================================= */
 .categories-section {
   max-width: 1280px;
   margin: 35px auto;
@@ -327,6 +469,9 @@ body {
   color: var(--royal-blue);
 }
 
+/* =========================================================
+   SESSÃO 6: CABEÇALHOS DE SEÇÃO E TABS DE PRODUTOS
+   ========================================================= */
 .section-header {
   text-align: center;
   margin-top: 10vh;
@@ -359,7 +504,6 @@ body {
   font-weight: 700;
   margin-top: 2px;
   cursor: pointer;
-
 }
 
 .section-header .ver-todos-link:hover {
@@ -394,7 +538,6 @@ body {
   align-items: center;
 }
 
-
 .section-header .nav-tabs .tab-btn:last-child {
   border-right: none;
 }
@@ -407,78 +550,20 @@ body {
   background-color: #F4F5FB;
 }
 
-
-@media (max-width: 768px) {
-
-  .shelf-wrapper, .carousel-viewport {
-    width: 100%;
-    overflow-x: auto !important; 
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory; 
-    -webkit-overflow-scrolling: touch;
-    
-   
-    scrollbar-width: thin;
-    scrollbar-color: #BDBDBD #F4F5FB;
-  }
-
-  
-  .shelf-wrapper::-webkit-scrollbar,
-  .carousel-viewport::-webkit-scrollbar {
-    height: 6px; 
-    display: block !important; 
-  }
-
-  .shelf-wrapper::-webkit-scrollbar-track,
-  .carousel-viewport::-webkit-scrollbar-track {
-    background: #F4F5FB;
-    border-radius: 4px;
-  }
-
-  .shelf-wrapper::-webkit-scrollbar-thumb,
-  .carousel-viewport::-webkit-scrollbar-thumb {
-    background: #BDBDBD;
-    border-radius: 4px;
-  }
-
-
-  .products-track {
-    display: flex;
-    gap: 16px;
-    width: max-content; 
-    padding-bottom: 12px; 
-  }
-
-
-  .product-card.carousel-card {
-    flex: 0 0 calc((100vw - 48px) / 1) !important; 
-    max-width: none;
-    scroll-snap-align: start;
-  }
-
-  .nav-arrow {
-    display: none !important;
-  }
-}
-
 @media (max-width: 700px) {
   .section-header {
     margin-top: 8vh;
   }
-
   .section-header .title-wrapper {
     gap: 15px;
     padding: 0 16px;
   }
-
   .section-header .title-wrapper h2 {
     font-size: 24px;
   }
-
   .section-header .nav-tabs-wrapper {
     padding: 0 16px;
   }
-
   .section-header .nav-tabs {
     margin-left: 10px;
   }
@@ -488,25 +573,117 @@ body {
   .section-header {
     margin-top: 6vh;
   }
-
   .section-header .title-wrapper {
     gap: 10px;
     padding: 0 12px;
   }
-
   .section-header .title-wrapper h2 {
     font-size: 20px;
   }
-
   .section-header .nav-tabs-wrapper {
     padding: 0 12px;
   }
-
   .section-header .nav-tabs .tab-btn {
     height: 48px;
     min-width: 13.385rem;
     padding: 12px 24px;
   }
+}
+
+@media (max-width: 768px) {
+  /* O container principal da seção */
+  .section-header {
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* O wrapper assume largura total e força a ativação do scroll horizontal com barra visível */
+  .section-header .nav-tabs-wrapper {
+    width: 100%;
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 16px 12px 16px; /* Espaço extra embaixo para a barra de scroll respirar */
+    box-sizing: border-box;
+    margin-top: 15px;
+    
+    /* Força a barra de rolagem a aparecer no Firefox */
+    scrollbar-width: auto;
+    scrollbar-color: #F71963 #E0E0E0;
+  }
+
+  /* Estilização explícita da barra de rolagem para Chrome, Safari e Edge */
+  .section-header .nav-tabs-wrapper::-webkit-scrollbar {
+    height: 8px !important; /* Barra com bom tamanho para conseguir ver e tocar facilmente */
+    display: block !important;
+  }
+
+  .section-header .nav-tabs-wrapper::-webkit-scrollbar-track {
+    background: #E0E0E0; /* Cor de fundo da pista da barra */
+    border-radius: 4px;
+  }
+
+  .section-header .nav-tabs-wrapper::-webkit-scrollbar-thumb {
+    background: #F71963; /* Cor rosa da Econverse para destacar bem a barra de rolagem */
+    border-radius: 4px;
+  }
+
+  /* Força as abas a esticarem em linha infinita sem quebrar */
+  .section-header .nav-tabs {
+    display: flex;
+    justify-content: flex-start !important;
+    width: max-content !important;
+    white-space: nowrap;
+    margin-top: 0;
+    border: none;
+    border-radius: 0;
+  }
+
+  /* Mantém o tamanho original de cada botão mas impede que sejam comprimidos */
+  .section-header .nav-tabs .tab-btn {
+    flex-shrink: 0 !important;
+    border-right: 1px solid #BDBDBD;
+  }
+}
+
+/* =========================================================
+   SESSÃO 7: CARROSSEL DE PRODUTOS E CARDS
+   ========================================================= */
+.product-shelf {
+  width: 1364px;
+  max-width: 100%;
+  height: 500px;
+  margin: 0 auto;
+  padding: 10px; 
+  position: relative;
+}
+
+.product-shelf .shelf-wrapper {
+  padding: 30px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.carousel-viewport {
+  overflow: hidden;
+  width: 100%;
+  padding: 10px 0; 
+}
+
+.products-track {
+  display: flex;
+  width: 100; 
+  gap: 18px; 
+  transition: transform 0.5s ease-in-out;
+  will-change: transform;
+}
+
+.carousel-card {  
+  flex: 0 0 calc((100% - 54px) / 4); 
+  box-sizing: border-box;
 }
 
 .product-shelf {
@@ -574,6 +751,7 @@ body {
     grid-template-columns: repeat(1, 1fr);
   }
 }
+
 .product-shelf .product-card {
   background: #FFFFFF;
   border: 1px solid #E5E5E5;
@@ -659,7 +837,56 @@ body {
   background-color: var(--royal-blue-hover);
 }
 
-/* --- ESTILOS BASE (ORIGINAIS) --- */
+@media (max-width: 768px) {
+  .shelf-wrapper, .carousel-viewport {
+    width: 100%;
+    overflow-x: auto !important; 
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory; 
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #BDBDBD #F4F5FB;
+  }
+
+  .shelf-wrapper::-webkit-scrollbar,
+  .carousel-viewport::-webkit-scrollbar {
+    height: 6px; 
+    display: block !important; 
+  }
+
+  .shelf-wrapper::-webkit-scrollbar-track,
+  .carousel-viewport::-webkit-scrollbar-track {
+    background: #F4F5FB;
+    border-radius: 4px;
+  }
+
+  .shelf-wrapper::-webkit-scrollbar-thumb,
+  .carousel-viewport::-webkit-scrollbar-thumb {
+    background: #BDBDBD;
+    border-radius: 4px;
+  }
+
+  .products-track {
+    display: flex;
+    gap: 16px;
+    width: max-content; 
+    padding-bottom: 12px; 
+  }
+
+  .product-card.carousel-card {
+    flex: 0 0 calc((100vw - 48px) / 1) !important; 
+    max-width: none;
+    scroll-snap-align: start;
+  }
+
+  .nav-arrow {
+    display: none !important;
+  }
+}
+
+/* =========================================================
+   SESSÃO 8: BANNERS PARCEIROS
+   ========================================================= */
 .partner-banners {
   width: 100%; 
   max-width: 1280px;
@@ -730,7 +957,6 @@ body {
     scrollbar-color: var(--muted-gray) #E0E0E0;
   }
   
-
   .partner-banners::-webkit-scrollbar {
     height: 8px !important; 
     display: block !important;
@@ -747,7 +973,6 @@ body {
   }
 
   .partner-banners .partner-card {
-
     flex: 0 0 85% !important; 
     min-width: 380px;
     margin-right: 16px; 
@@ -773,6 +998,9 @@ body {
   }
 }
 
+/* =========================================================
+   SESSÃO 9: MARCAS (BRANDS)
+   ========================================================= */
 .brands-section {
   max-width: 1280px;
   margin: 50px auto;
@@ -838,7 +1066,9 @@ body {
   transform: scale(1.2);
 }
 
-
+/* =========================================================
+   SESSÃO 10: NEWSLETTER
+   ========================================================= */
 .newsletter-section {
   background-color: #271C47;
   color: white;
@@ -931,6 +1161,9 @@ body {
   height: 15px;
 }
 
+/* =========================================================
+   SESSÃO 11: FOOTER
+   ========================================================= */
 .main-footer {
   background-color: #F8F8F8;
   padding: 50px 0 20px;
@@ -1038,6 +1271,9 @@ body {
   color: #9F9F9F;
 }
 
+/* =========================================================
+   SESSÃO 12: MODAL DE COMPRA
+   ========================================================= */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -1215,36 +1451,10 @@ font-family: "Work Sans", sans-serif;
     transform: scale(1);
   }
 }
+
 /* =========================================================
-   Responsive layout
+   SESSÃO 13: RESPONSIVO GERAL (MEDIA QUERIES)
    ========================================================= */
-
-:root {
-  --page-gutter: clamp(16px, 4vw, 60px);
-  --content-width: 1280px;
-}
-
-img,
-svg {
-  max-width: 100%;
-}
-
-button,
-input {
-  font: inherit;
-}
-
-.header-topbar .container,
-.main-header .container,
-.category-nav .container,
-.categories-section,
-.brands-section,
-.newsletter-section .container,
-.main-footer .container,
-.main-footer .footer-bottom {
-  width: min(100%, var(--content-width));
-}
-
 /* Large screens */
 @media (max-width: 1280px) {
   .header-topbar .container {
@@ -1792,204 +2002,5 @@ input {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-  }
-}
-
-
-/* --- MELHORIA DA TOP BAR EM MOBILE --- */
-@media (max-width: 768px) {
-  .header-topbar .topbar-container {
-    display: flex;
-    overflow-x: auto;
-    white-space: nowrap;
-    justify-content: flex-start;
-    padding: 6px 15px;
-    gap: 20px;
-    scrollbar-width: none;
-  }
-  .header-topbar .topbar-container::-webkit-scrollbar {
-    display: none;
-  }
-  .header-topbar .topbar-item {
-    flex-shrink: 0;
-    font-size: 12px;
-  }
-}
-
-/* --- ESTILOS DO MENU DE HAMBÚRGUER --- */
-.hamburger-btn {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #3F3F40;
-  padding: 5px;
-}
-
-/* Oculta elementos de texto extra no desktop se necessário */
-.desktop-only {
-  display: flex;
-}
-
-/* Gaveta do menu mobile (escondida por predefinição) */
-.mobile-menu-drawer {
-  position: fixed;
-  top: 0;
-  left: -100%;
-  width: 280px;
-  height: 100vh;
-  background: #FFFFFF;
-  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  transition: left 0.3s ease-in-out;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.mobile-menu-drawer.open {
-  left: 0;
-}
-
-/* Cabeçalho do menu mobile com o botão de fechar ("X") */
-.mobile-menu-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 2px solid #F0F0F0;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-}
-
-.mobile-menu-header h3 {
-  font-size: 18px;
-  color: var(--royal-blue, #070716);
-  margin: 0;
-  border: none;
-  padding: 0;
-}
-
-.close-menu-btn {
-  background: none;
-  border: none;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  color: #3F3F40;
-  padding: 5px;
-}
-
-.mobile-menu-content ul {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 20px 0;
-}
-
-.mobile-menu-content ul li {
-  padding: 12px 0;
-  border-bottom: 1px solid #F0F0F0;
-}
-
-.mobile-menu-content ul li a {
-  text-decoration: none;
-  color: #3F3F40;
-  font-weight: 500;
-  font-size: 15px;
-}
-
-.mobile-menu-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  border-top: 1px solid #F0F0F0;
-  padding-top: 20px;
-}
-
-.mobile-menu-actions a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: #3F3F40;
-  font-weight: 500;
-}
-
-/* Ativação do botão de hambúrguer e ajuste do layout em telas pequenas */
-@media (max-width: 768px) {
-  .hamburger-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .header-topbar {
-    display: none;
-  }
-
-  .desktop-only {
-    display: none !important;
-  }
-
-  .main-header-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 15px;
-  }
-}
-
-@media (max-width: 768px) {
-  /* O container principal da seção */
-  .section-header {
-    width: 100%;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  /* O wrapper assume largura total e força a ativação do scroll horizontal com barra visível */
-  .section-header .nav-tabs-wrapper {
-    width: 100%;
-    overflow-x: auto !important;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    padding: 0 16px 12px 16px; /* Espaço extra embaixo para a barra de scroll respirar */
-    box-sizing: border-box;
-    margin-top: 15px;
-    
-    /* Força a barra de rolagem a aparecer no Firefox */
-    scrollbar-width: auto;
-    scrollbar-color: #F71963 #E0E0E0;
-  }
-
-  /* Estilização explícita da barra de rolagem para Chrome, Safari e Edge */
-  .section-header .nav-tabs-wrapper::-webkit-scrollbar {
-    height: 8px !important; /* Barra com bom tamanho para conseguir ver e tocar facilmente */
-    display: block !important;
-  }
-
-  .section-header .nav-tabs-wrapper::-webkit-scrollbar-track {
-    background: #E0E0E0; /* Cor de fundo da pista da barra */
-    border-radius: 4px;
-  }
-
-  .section-header .nav-tabs-wrapper::-webkit-scrollbar-thumb {
-    background: #F71963; /* Cor rosa da Econverse para destacar bem a barra de rolagem */
-    border-radius: 4px;
-  }
-
-  /* Força as abas a esticarem em linha infinita sem quebrar */
-  .section-header .nav-tabs {
-    display: flex;
-    justify-content: flex-start !important;
-    width: max-content !important;
-    white-space: nowrap;
-    margin-top: 0;
-    border: none;
-    border-radius: 0;
-  }
-
-  /* Mantém o tamanho original de cada botão mas impede que sejam comprimidos */
-  .section-header .nav-tabs .tab-btn {
-    flex-shrink: 0 !important;
-    border-right: 1px solid #BDBDBD;
   }
 }

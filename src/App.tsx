@@ -13,6 +13,7 @@ import { Navbar } from './components/Navbar';
 import { Header } from './components/Header';
 import { useProducts, type Product } from '../src/services/useProducts';
 import { Icons } from './components/Icones';
+import { formatPrice } from './utils/formatPrice';
 
 export default function App() {
   const { products, loading, error } = useProducts();  
@@ -20,13 +21,6 @@ export default function App() {
   const [modalQuantity, setModalQuantity] = useState(1);
   const [activeCategory, setActiveCategory] = useState("Tecnologia");
   const [cartCount, setCartCount] = useState(0);
-
-  const formatPrice = (value: number) => {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(value);
-  };
 
   const handleOpenModal = (product: Product) => {
     setSelectedProduct(product);
@@ -72,16 +66,28 @@ export default function App() {
       )}
 
       <Parceiros/>
-      <ProdRelacionados 
-        products={products} 
-        onOpenProduct={handleOpenModal} 
-      />      
+      {loading ? (
+        <p style={{ textAlign: "center", padding: "50px" }}>A carregar produtos...</p>
+      ) : error ? (
+        <p style={{ textAlign: "center", padding: "50px", color: "red" }}>Erro ao carregar os produtos. Tente novamente mais tarde.</p>
+      ) : (
+        <ProdRelacionados
+          products={products} 
+          onOpenProduct={handleOpenModal} 
+        />
+      )}     
       <Parceiros/>
       <Marcas/>      
-      <ProdRelacionados 
-        products={products} 
-        onOpenProduct={handleOpenModal} 
-      />      
+      {loading ? (
+        <p style={{ textAlign: "center", padding: "50px" }}>A carregar produtos...</p>
+      ) : error ? (
+        <p style={{ textAlign: "center", padding: "50px", color: "red" }}>Erro ao carregar os produtos. Tente novamente mais tarde.</p>
+      ) : (
+        <ProdRelacionados
+          products={products} 
+          onOpenProduct={handleOpenModal} 
+        />
+      )}        
       <Novidades/>
       <Footer/>
       {selectedProduct && (
